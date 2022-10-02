@@ -33,9 +33,7 @@ function App() {
       >
         <Navbar
           logo={
-            <a className="btn btn-ghost normal-case text-xl fill-primary">
-              <Logo className="fill-primary h-6" />
-            </a>
+            <Logo className="fill-primary h-6" />
           }
           rightContent={
             <SelectThemeDropdown theme={theme} setTheme={setTheme} />

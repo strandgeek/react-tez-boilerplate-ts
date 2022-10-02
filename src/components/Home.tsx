@@ -12,10 +12,23 @@ export const Home: FC<HomeProps> = (props) => {
   const { activeAccountAddress } = useWallet();
   const contract = useContract("KT1HQgTAw5zFaYaBU611TWCquyigZ5Js1CCv");
 
+  const getPosts = useCallback(async () => {
+    setLoading(true);
+    if (!contract || !activeAccountAddress) {
+      return;
+    }
+    const storage = await contract.storage<BigMapAbstraction>();
+    const posts = await storage.get<string[]>(activeAccountAddress);
+    if (posts) {
+      setPosts(posts);
+    }
+    setLoading(false);
+  }, [contract, activeAccountAddress]);
+
   // Load Posts when contract is ready
   useEffect(() => {
     getPosts();
-  }, [contract, activeAccountAddress]);
+  }, [contract, activeAccountAddress, getPosts]);
 
   const onPostClick = async () => {
     setLoading(true);
@@ -33,18 +46,6 @@ export const Home: FC<HomeProps> = (props) => {
     }
     setLoading(false);
   };
-  const getPosts = useCallback(async () => {
-    setLoading(true);
-    if (!contract || !activeAccountAddress) {
-      return;
-    }
-    const storage = await contract.storage<BigMapAbstraction>();
-    const posts = await storage.get<string[]>(activeAccountAddress);
-    if (posts) {
-      setPosts(posts);
-    }
-    setLoading(false);
-  }, [contract, activeAccountAddress]);
   return (
     <div className="mx-auto max-w-xl my-12 px-4">
       <ActiveAccountInfo secondaryInfo="network" />

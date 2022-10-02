@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "node_modules/react-tez/src/**/*.{js,jsx,ts,tsx}"
+    "node_modules/react-tez/dist/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
     extend: {},
